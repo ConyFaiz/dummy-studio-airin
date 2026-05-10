@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Airin — Fotografi Profesional Banjarmasin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #0c0c0c;
+    --bg-card: #141414;
+    --white: #f2f0ec;
+    --dim: #6e6b64;
+    --rose: #c4727a;
+    --rose-soft: rgba(196,114,122,0.1);
+    --border: #1e1e1e;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Manrope', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--rose); color: #fff; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(12,12,12,0.85);
+    backdrop-filter: blur(20px);
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 400; color: var(--white);
+    text-decoration: none; letter-spacing: 0.05em;
+  }
+  .logo em { color: var(--rose); font-style: italic; }
+  .nav-r { display: flex; gap: 2rem; align-items: center; }
+  .nav-r a {
+    color: var(--dim); text-decoration: none; font-size: 0.8rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400;
+    transition: color 0.3s;
+  }
+  .nav-r a:hover { color: var(--white); }
+  .nav-cta-r {
+    color: var(--rose) !important;
+    border: 1px solid rgba(196,114,122,0.3);
+    padding: 0.45rem 1.1rem; border-radius: 100px;
+  }
+  .nav-cta-r:hover { background: var(--rose-soft); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, transparent 40%, var(--bg) 100%),
+      linear-gradient(135deg, #1a1215 0%, #0c0c0c 50%, #0f1210 100%);
+  }
+  .hero-content { position: relative; }
+  .hero-tag {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.25em;
+    color: var(--rose); margin-bottom: 1.5rem; font-weight: 500;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.2s;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.0; font-weight: 400; letter-spacing: -0.02em;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.4s;
+  }
+  .hero h1 em { color: var(--rose); font-style: italic; }
+  .hero-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 2rem;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.6s;
+  }
+  .hero-desc {
+    color: var(--dim); font-size: 0.95rem; line-height: 1.8;
+    max-width: 380px; font-weight: 300;
+  }
+  .btn-rose {
+    background: var(--rose); color: #fff;
+    padding: 0.85rem 2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 500; font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.3s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    white-space: nowrap;
+  }
+  .btn-rose:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(196,114,122,0.25); }
+
+  /* GALLERY */
+  .gallery { padding: 5rem 3rem; }
+  .gallery-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+  .gallery-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 400;
+  }
+  .gallery-head h2 em { color: var(--rose); font-style: italic; }
+  .gallery-filter {
+    display: flex; gap: 1rem;
+  }
+  .gallery-filter span {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--dim); cursor: pointer; transition: color 0.3s;
+    padding-bottom: 0.25rem;
+  }
+  .gallery-filter span.active {
+    color: var(--white);
+    border-bottom: 1px solid var(--rose);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 0.75rem;
+  }
+  .g-item {
+    border-radius: 8px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: transform 0.4s;
+    border: 1px solid var(--border);
+  }
+  .g-item:hover { transform: scale(1.02); }
+  .g-item .g-inner {
+    width: 100%;
+    background: var(--bg-card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    position: relative;
+  }
+  .g-item:nth-child(1) .g-inner { aspect-ratio: 3/4; background: linear-gradient(135deg, #1a1520, #0c0c0c); }
+  .g-item:nth-child(2) .g-inner { aspect-ratio: 1; background: linear-gradient(135deg, #1a1a10, #0c0c0c); }
+  .g-item:nth-child(3) .g-inner { aspect-ratio: 3/4; background: linear-gradient(135deg, #10151a, #0c0c0c); }
+  .g-item:nth-child(4) .g-inner { aspect-ratio: 4/3; background: linear-gradient(135deg, #1a1015, #0c0c0c); }
+  .g-item:nth-child(5) .g-inner { aspect-ratio: 4/3; background: linear-gradient(135deg, #151a10, #0c0c0c); }
+  .g-item:nth-child(6) .g-inner { aspect-ratio: 1; background: linear-gradient(135deg, #15101a, #0c0c0c); }
+
+  .g-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.25rem;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .g-item:hover .g-overlay { opacity: 1; }
+  .g-overlay h4 {
+    font-family: var(--font-display);
+    font-size: 1.1rem; font-weight: 400;
+  }
+  .g-overlay span { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ABOUT */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; padding: 5rem 3rem; align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .about-photo {
+    width: 100%; aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #1a1215, #0c0c0c);
+    border-radius: 300px 300px 12px 12px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+  }
+  .about-text .sec-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--rose); margin-bottom: 0.75rem; font-weight: 500;
+  }
+  .about-text h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  .about-text h2 em { color: var(--rose); font-style: italic; }
+  .about-text p {
+    color: var(--dim); font-size: 0.9rem; line-height: 1.8;
+    font-weight: 300; margin-bottom: 1rem;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 5rem 3rem;
+    border-top: 1px solid var(--border);
+  }
+  .svc-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .svc-item {
+    background: var(--bg); padding: 2.5rem;
+    transition: background 0.3s;
+  }
+  .svc-item:hover { background: var(--bg-card); }
+  .svc-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 400;
+  }
+  .svc-item p { color: var(--dim); font-size: 0.85rem; line-height: 1.6; font-weight: 300; }
+  .svc-price {
+    display: inline-block; margin-top: 1rem;
+    font-size: 0.75rem; color: var(--rose);
+    border: 1px solid rgba(196,114,122,0.2);
+    padding: 0.3rem 0.7rem; border-radius: 100px;
+  }
+
+  /* CTA */
+  .cta {
+    text-align: center;
+    padding: 8rem 3rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+  .cta h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400; margin-bottom: 1rem;
+  }
+  .cta h2 em { color: var(--rose); font-style: italic; }
+  .cta p { color: var(--dim); max-width: 420px; margin: 0 auto 2.5rem; font-weight: 300; }
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(196,114,122,0.06), transparent 70%);
+    filter: blur(60px); pointer-events: none;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; color: var(--dim);
+  }
+  footer a { color: var(--dim); text-decoration: none; }
+  footer a:hover { color: var(--rose); }
+
+  .reveal {
+    opacity: 0; transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-r { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .gallery { padding: 3rem 1.5rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-head { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    .about { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
+    .about-photo { aspect-ratio: 1; border-radius: 50%; max-width: 250px; margin: 0 auto; }
+    .services { padding: 3rem 1.5rem; }
+    .cta { padding: 5rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Studio <em>Airin</em></a>
+  <div class="nav-r">
+    <a href="#galeri">Galeri</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#layanan">Layanan</a>
+    <a href="#kontak" class="nav-cta-r">Booking</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tag">📸 Fotografi Profesional — Banjarmasin</p>
+    <h1>Setiap momen<br>punya <em>cerita</em></h1>
+    <div class="hero-row">
+      <p class="hero-desc">Mengabadikan momen berharga Anda dengan sentuhan artistik. Wedding, prewedding, produk, dan portrait.</p>
+      <a href="#kontak" class="btn-rose">Booking Sesi →</a>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="galeri">
+  <div class="gallery-head reveal">
+    <h2>Karya <em>Terbaru</em></h2>
+    <div class="gallery-filter">
+      <span class="active">Semua</span>
+      <span>Wedding</span>
+      <span>Portrait</span>
+      <span>Produk</span>
+    </div>
+  </div>
+  <div class="gallery-grid reveal">
+    <div class="g-item">
+      <div class="g-inner">💒</div>
+      <div class="g-overlay"><h4>Wedding Rina & Adi</h4><span>Wedding</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-inner">👤</div>
+      <div class="g-overlay"><h4>Corporate Portrait</h4><span>Portrait</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-inner">🌸</div>
+      <div class="g-overlay"><h4>Prewedding Loksado</h4><span>Prewedding</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-inner">☕</div>
+      <div class="g-overlay"><h4>Kopi Banua Catalog</h4><span>Produk</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-inner">👶</div>
+      <div class="g-overlay"><h4>Newborn Session</h4><span>Portrait</span></div>
+    </div>
+    <div class="g-item">
+      <div class="g-inner">🎂</div>
+      <div class="g-overlay"><h4>Birthday Party</h4><span>Event</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="tentang">
+  <div class="about-photo reveal">👩‍🎨</div>
+  <div class="about-text reveal">
+    <div class="sec-label">Tentang Saya</div>
+    <h2>Airin — fotografer dengan mata untuk <em>detail</em></h2>
+    <p>Sejak 2019, saya telah memotret lebih dari 200 sesi — dari wedding intimate hingga katalog produk UMKM. Berbasis di Banjarmasin, melayani seluruh Kalimantan Selatan.</p>
+    <p>Setiap sesi bukan sekadar jepret. Saya percaya foto terbaik lahir dari koneksi — ketika subjek merasa nyaman, momen autentik muncul dengan sendirinya.</p>
+  </div>
+</section>
+
+<section class="services" id="layanan">
+  <div class="sec-label reveal" style="color:var(--rose);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.75rem;">Paket Layanan</div>
+  <h2 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,3.5vw,3rem);margin-bottom:3rem;">Pilih sesuai <em style='color:var(--rose);font-style:italic;'>kebutuhan</em> Anda</h2>
+  <div class="svc-row reveal">
+    <div class="svc-item">
+      <h3>Wedding</h3>
+      <p>Dokumentasi full-day, 200+ foto edited, 1 album premium, video highlight 3 menit.</p>
+      <span class="svc-price">Mulai Rp 5.000.000</span>
+    </div>
+    <div class="svc-item">
+      <h3>Prewedding</h3>
+      <p>1 lokasi, 2 jam sesi, 50+ foto edited, outfit guidance, lokasi Kalsel pilihan.</p>
+      <span class="svc-price">Mulai Rp 2.500.000</span>
+    </div>
+    <div class="svc-item">
+      <h3>Produk & UMKM</h3>
+      <p>Foto produk katalog, flatlay, lifestyle. 20 foto per sesi. Cocok untuk online shop.</p>
+      <span class="svc-price">Mulai Rp 500.000</span>
+    </div>
+    <div class="svc-item">
+      <h3>Portrait</h3>
+      <p>Personal, corporate, atau keluarga. Studio atau outdoor. 15+ foto edited.</p>
+      <span class="svc-price">Mulai Rp 350.000</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="kontak">
+  <div class="cta-glow"></div>
+  <h2 class="reveal">Punya momen yang<br>ingin <em>diabadikan?</em></h2>
+  <p class="reveal">Konsultasi gratis. Saya bantu pilihkan paket yang tepat untuk Anda.</p>
+  <a href="#" class="btn-rose reveal" style="font-size:1rem;padding:1rem 2.5rem;">
+    📸 Chat WhatsApp
+  </a>
+</section>
+
+<footer>
+  <span>© 2026 Studio Airin. Banjarmasin, Kalimantan Selatan.</span>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="#">Instagram</a>
+    <a href="#">WhatsApp</a>
+    <a href="#">TikTok</a>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
